@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Data Display</title>
+</head>
+<body>
+  <h1>Firebase Data</h1>
+  <div id="data-container"></div>
+
+  <script>
+    const dataContainer = document.getElementById('data-container');
+
+    function displayData(data) {
+      dataContainer.innerHTML = ''; // Clear any existing content
+      for (const key in data) {
+        const object = data[key];
+        const itemElement = document.createElement('div'); // Create an element for each object
+        itemElement.innerText = `Namespace: ${object.namespace}, RSSI: ${object.rssi}`; // Example formatting
+        dataContainer.appendChild(itemElement);
+      }
+    }
+
+    fetch('http://192.168.0.117:3000/firebase-data') // Assuming your server is running on the same domain
+      .then(response => response.json())
+      .then(data => displayData(data))
+      .catch(error => console.error(error));
+  </script>
+</body>
+</html>
